@@ -6,7 +6,12 @@ public class BulletCtrl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
 
-    private Vector3 targetPos;
+    private Vector3 moveDirection;
+
+    private void Awake()
+    {
+        Destroy(gameObject, 10.0f);
+    }
 
     void Start()
     {
@@ -20,11 +25,11 @@ public class BulletCtrl : MonoBehaviour
 
     private void BulletMoveUpdate()
     {
-        transform.position += (targetPos - transform.position).normalized * Time.deltaTime * moveSpeed;
+        transform.position += moveDirection.normalized * Time.deltaTime * moveSpeed;
     }
 
-    public void SetTargetPos(Vector3 pos)
+    public void SetMoveDirection(Vector3 pos)
     {
-        targetPos = pos;
+        moveDirection = pos;
     }
 }

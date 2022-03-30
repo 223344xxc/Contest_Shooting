@@ -6,11 +6,14 @@ public class PlayerCtrl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float attackDelay;
 
     private PlayerCameraCtrl camCtrl;
     private Vector3 moveVector = Vector3.zero;
-    private bool onClick;
-    
+    private bool onClick = false;
+
+    private bool canAttack = true;
+
     private void Awake()
     {
         InitPlayerCtrl();
@@ -32,6 +35,7 @@ public class PlayerCtrl : MonoBehaviour
         PlayerRayUpdate();
     }
 
+
     private void PlayerInputUpdate()
     {
         onClick = Input.GetMouseButton(0);
@@ -52,13 +56,27 @@ public class PlayerCtrl : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("RayHit")))
         {
-            "hit".Log();
             if (onClick)
             {
-                BulletCtrl bc = Instantiate(bulletPrefab).GetComponent<BulletCtrl>();
-                bc.transform.position = transform.position;
-                bc.SetTargetPos(hit.point);
+                Attack(hit.point);
             }
         }
+    }
+
+    private void Attack(Vector3 targetPos)
+    {
+        if (!canAttack)
+            return;
+        BulletCtrl bc = Instantiate(bulletPrefab).GetComponent<BulletCtrl>();
+        bc.transform.position = transform.position;
+        bc.SetMoveDirection(targetPos - transform.position);
+
+        canAttack = false;
+        Invoke("ReleaseAttack", attackDelay);
+    }
+
+    private void ReleaseAttack()
+    {
+        canAttack = true;
     }
 }
