@@ -11,6 +11,7 @@ public class BackGroundObject : MonoBehaviour
         transform.position -= new Vector3(0, 0, distance * Time.deltaTime);
         if(transform.position.z < -BackGroundMgr.instance.GetBackGroundObjectSize())
         {
+            ("TryReset" + backGroundIndexNumber.ToString()).Log();
             BackGroundMgr.instance.ResetGround(this);
         }
     }

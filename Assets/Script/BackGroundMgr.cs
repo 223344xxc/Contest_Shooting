@@ -59,10 +59,11 @@ public class BackGroundMgr : MonoBehaviour
     {
         int idx;
         idx = bgo.GetIndex() - 1;
-        idx = idx < 0 ? 0 : backGroundList.Count - 1;
+        idx = idx < 0 ? backGroundList.Count - 1 : idx;
+        idx.Log();
 
         bgo.transform.position = backGroundList[idx].transform.position += new Vector3(0, 0, backGroundPrefabSize);
-        idx.Log();
+        bgo.transform.position -= new Vector3(0, 0, backGroundScrollSpeed * Time.deltaTime);
     }
 
     public float GetBackGroundObjectSize()
