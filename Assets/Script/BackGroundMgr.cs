@@ -45,6 +45,7 @@ public class BackGroundMgr : MonoBehaviour
     void Update()
     {
         BackGroundMoveUpdate();   
+
     }
 
     private void BackGroundMoveUpdate()
@@ -62,7 +63,7 @@ public class BackGroundMgr : MonoBehaviour
         idx = idx < 0 ? backGroundList.Count - 1 : idx;
         idx.Log();
 
-        bgo.transform.position = backGroundList[idx].transform.position += new Vector3(0, 0, backGroundPrefabSize);
+        bgo.transform.position = backGroundList[idx].transform.position + new Vector3(0, 0, backGroundPrefabSize);
         bgo.transform.position -= new Vector3(0, 0, backGroundScrollSpeed * Time.deltaTime);
     }
 
